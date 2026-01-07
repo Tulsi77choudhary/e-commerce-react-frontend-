@@ -2,16 +2,15 @@ import React, { useEffect } from 'react'
 import { Button, Grid, TextField } from '@mui/material'
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { register, getUser } from '../../../State/Action/Action';
+import { register} from '../../../State/Action/Action';
 
 
 export const RegisterForm = () => {
-
+  
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const jwt = localStorage.getItem("jwt");
   const auth = useSelector((store) => store.auth);
-
 
   useEffect(() => {
     if (auth.user) {
@@ -52,7 +51,7 @@ export const RegisterForm = () => {
               autoComplete='given-name'
             />
           </Grid>
-          <Grid item xs={12}  >
+          <Grid item xs={12} sm={6}   >
             <TextField
               required
               id="lastName"
@@ -61,8 +60,6 @@ export const RegisterForm = () => {
               fullWidth
               autoComplete='given-name'
             />
-
-
           </Grid>
         </Grid>
         <Grid spacing={2} mt={2}>

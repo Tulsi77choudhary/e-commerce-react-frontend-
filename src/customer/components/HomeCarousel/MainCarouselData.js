@@ -1,10 +1,10 @@
 export const MainCarouselData = [
     {
-        image: 'https://www.cbazaar.com/blog/wp-content/uploads/2023/09/WP_Blog_July28_04.jpg',
+        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwsbUN9mjh1b9kMjjxavJhl17iEj6L6tVZOQ&s',
         title: 'Fashion Sale',
     },
     {
-        image: 'https://resizepng.com/dresses-for-men-in-winter-wedding-season.png',
+        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQB_g-MBpY1sz5UbTnrO8ZTwi-UCIAQwoA3m6zvORGgw1EfRUPRf_AKaOdGn79T_T-LHLI&usqp=CAU',
         title:' Fashion Trends',
     },
     {

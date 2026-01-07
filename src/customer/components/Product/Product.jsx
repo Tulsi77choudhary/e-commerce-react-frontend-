@@ -80,7 +80,6 @@ const Product = () => {
   const handleRadioFilter = (sectionId, value) => {
     const searchParams = new URLSearchParams(location.search);
 
-    // set or update the radio filter
     if (value) {
       searchParams.set(sectionId, value);
     } else {

@@ -18,8 +18,8 @@ export const CustomerRouters = () => {
                 <Navigation />
             </div>
             <Routes>
-                <Route path='/login' element={<HomePage />}></Route>
-                <Route path='/register' element={<HomePage />}></Route>
+                {/* <Route path='/login' element={<HomePage />}></Route>
+                <Route path='/register' element={<HomePage />}>
 
                 <Route path='/' element={<HomePage />}></Route>
                 <Route path='/cart' element={<Cart />}></Route>
@@ -28,11 +28,7 @@ export const CustomerRouters = () => {
                 <Route path='/checkout' element={<Chackout/>}></Route>
                 <Route path="/checkout/:orderId" element={<OrderSummary />}></Route>
                 <Route path='/account/order' element={<OrderDetails/>}></Route>
-                <Route path="/payment/:orderId" element={<PaymentSuccess/>}></Route>
-
-                
-                
-
+                <Route path="/payment/:orderId" element={<PaymentSuccess/>}></Route> */}
         
                 {/* <Order/> */}
                 {/* <OrderDetails/>*/}

@@ -6,7 +6,7 @@ const filters = [
     options: [
       { value: 'white', label: 'White', checked: false },
       { value: 'beige', label: 'Beige', checked: false },
-       { value: 'yello', label: 'Yello', checked: false },
+      { value: 'yello', label: 'Yello', checked: false },
       { value: 'blue', label: 'Blue', checked: true },
       { value: 'brown', label: 'Brown', checked: false },
       { value: 'green', label: 'Green', checked: false },
