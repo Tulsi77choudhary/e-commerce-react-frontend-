@@ -4,7 +4,7 @@ import Admin from "../Admin/Admin";
 function AdminRouters() {
   return (
     <Routes>
-      <Route path="/" element={<Admin />} />
+      <Route path="/*" element={<Admin />} />
     </Routes>
   );
 }

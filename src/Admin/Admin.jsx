@@ -29,7 +29,7 @@ const menu = [
   { name: "Products", path: "/admin/products", Icon: <InboxIcon /> },
   { name: "Customers", path: "/admin/customers", Icon: <MailIcon /> },
   { name: "Orders", path: "/admin/orders", Icon: <InboxIcon /> },
-  { name: "Add Product", path: "/admin/product/create", Icon: <InboxIcon /> },
+  { name: "AddProduct", path: "/admin/product/create", Icon: <InboxIcon /> },
 ];
 
 function Admin() {
@@ -45,26 +45,28 @@ function Admin() {
         flexDirection: "column",
         height: "100vh",
         justifyContent: "space-between",
-
-       
+        
       }}
     >
       {isLargeScreen && <Toolbar />}
-
       <List>
-        {menu.map((item) => (
+        {menu.map((item,index) => (
           <ListItem key={item.name} disablePadding onClick={() => navigate(item.path)}>
             <ListItemButton selected={location.pathname === item.path}>
-              <ListItemIcon>{item.Icon}</ListItemIcon>
-              <ListItemText>{item.name}</ListItemText>
+              <ListItemIcon>
+                {item.Icon}
+              </ListItemIcon>
+              <ListItemText>
+              {item.name}
+              </ListItemText>
             </ListItemButton>
           </ListItem>
         ))}
       </List>
 
       <List>
-        <ListItem disablePadding onClick={() => navigate("/admin/profile")}>
-          <ListItemButton selected={location.pathname === "/admin/profile"}>
+        <ListItem disablePadding>
+          <ListItemButton>
             <ListItemIcon>
               <AccountCircleIcon />
             </ListItemIcon>
@@ -76,18 +78,26 @@ function Admin() {
   );
 
   return (
+    <div>
     <div className="flex h-[100vh]">
       <CssBaseline />
-      <div className="flex-shrink-0 w-60 border-r border-gray-300">{drawer}</div>
+      {/* <div className="flex-shrink-0 w-60 border-r border-gray-300">
+        {drawer}
+      </div> */}
+      <div
+      >
+        {drawer}
+      </div>
       <div className="flex-1 p-4">
         <Routes>
-          <Route index element={<AdminDashboard />} />
-          <Route path="product/create" element={<CreateProductForm />} />
-          <Route path="products" element={<ProductTable />} />
-          <Route path="orders" element={<OrdersTable />} />
-          <Route path="customers" element={<CustomersTable />} />
+          <Route path="/" element={<AdminDashboard />}></Route>
+          <Route path="product/create" element={<CreateProductForm />}></Route>
+          <Route path="products" element={<ProductTable />}></Route>
+          <Route path="orders" element={<OrdersTable />}></Route>
+          <Route path="customers" element={<CustomersTable />} ></Route>
         </Routes>
       </div>
+    </div>
     </div>
   );
 }
