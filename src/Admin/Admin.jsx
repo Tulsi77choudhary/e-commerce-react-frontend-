@@ -91,8 +91,8 @@ function Admin() {
       <div className="flex-1 p-4">
         <Routes>
           <Route path="/" element={<AdminDashboard />}></Route>
-          <Route path="product/create" element={<CreateProductForm />}></Route>
           <Route path="products" element={<ProductTable />}></Route>
+          <Route path="product/create" element={<CreateProductForm />}></Route>
           <Route path="orders" element={<OrdersTable />}></Route>
           <Route path="customers" element={<CustomersTable />} ></Route>
         </Routes>

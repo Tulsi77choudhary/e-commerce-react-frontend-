@@ -1,13 +1,15 @@
 import React from 'react'
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+import { CardHeader,Cart,Avatar,Button,Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import { useSelector } from 'react-redux';
-import { useEffect} from "react";
+import { useEffect } from "react";
 import { useDispatch } from 'react-redux';
 import { findProducts } from "../../State/Product/Action";
+
+
 const ProductTable = () => {
 
   const dispatch = useDispatch();
-  const { products } = useSelector((state) => state.products);
+  const { products } = useSelector((state) => state.product);
   console.log("products", products);
 
   useEffect(() => {
@@ -19,44 +21,58 @@ const ProductTable = () => {
       maxPrice: null,
       minDiscount: 0,
       sort: "price_low",
-      pageNumber: -1,
-      pageSize: 10,
+      pageNumber: 0,
+      pageSize: 5,
       stock: "",
     };
 
     dispatch(findProducts(data));
-  }, []);
+  }, [dispatch]);
+
   return (
-    <div>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Dessert (100g serving)</TableCell>
-              <TableCell align="right">Calories</TableCell>
-              <TableCell align="right">Fat&nbsp;(g)</TableCell>
-              <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-              <TableCell align="right">Protein&nbsp;(g)</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {/* {rows.map((row) => (
-              <TableRow
-                key={row.name}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {row.name}
-                </TableCell>
-                <TableCell align="right">{row.calories}</TableCell>
-                <TableCell align="right">{row.fat}</TableCell>
-                <TableCell align="right">{row.carbs}</TableCell>
-                <TableCell align="right">{row.protein}</TableCell>
+    <div className='p-5'>
+
+      <Cart className="mt-2">
+        <CardHeader title="All Products" />
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Image</TableCell>
+                <TableCell align="left">Title</TableCell>
+                <TableCell align="left">Category</TableCell>
+                <TableCell align="left">Price</TableCell>
+                <TableCell align="left">Quantity</TableCell>
+
+                <TableCell align="left">Delete</TableCell>
               </TableRow>
-            ))} */}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </TableHead>
+            <TableBody>
+              {products.map((item) => (
+                <TableRow
+                  key={item.name}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <TableCell align="left">
+                    <Avatar src={item.imageUrl} />
+                  </TableCell>
+                  <TableCell align="left" scope="row">
+                    {item.title}
+                  </TableCell>
+                  <TableCell align="left">{item.category.name}</TableCell>
+                  <TableCell align="left">{item.price}</TableCell>
+                  <TableCell align="left">{item.quantity}</TableCell>
+                  <TableCell align="left">
+                    <Button variant="outlined" color="error">Delete</Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Cart>
+
+
     </div>
   )
 }
