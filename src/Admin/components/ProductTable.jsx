@@ -1,9 +1,10 @@
 import React from 'react'
-import { CardHeader,Cart,Avatar,Button,Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+import { CardHeader,Avatar,Button,Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useEffect } from "react";
 import { useDispatch } from 'react-redux';
-import { findProducts } from "../../State/Product/Action";
+import { findProducts, deleteProduct } from "../../State/Product/Action";
+import { Card } from "@mui/material";
 
 
 const ProductTable = () => {
@@ -11,6 +12,10 @@ const ProductTable = () => {
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.product);
   console.log("products", products);
+
+  const handleProductDelete = (productId) => {
+    dispatch(deleteProduct(productId));
+  }
 
   useEffect(() => {
     const data = {
@@ -32,7 +37,7 @@ const ProductTable = () => {
   return (
     <div className='p-5'>
 
-      <Cart className="mt-2">
+      <Card className="mt-2">
         <CardHeader title="All Products" />
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
@@ -63,16 +68,19 @@ const ProductTable = () => {
                   <TableCell align="left">{item.price}</TableCell>
                   <TableCell align="left">{item.quantity}</TableCell>
                   <TableCell align="left">
-                    <Button variant="outlined" color="error">Delete</Button>
+                    <Button 
+                    onClick={()=>handleProductDelete(item.id)} 
+                    variant="outlined" 
+                    color="error">
+                    Delete
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
-      </Cart>
-
-
+      </Card>
     </div>
   )
 }
