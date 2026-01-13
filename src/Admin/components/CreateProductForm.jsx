@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { createProduct } from '../../State/Product/Action';
 import { useState } from 'react';
 import { Grid, TextField, Typography, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import Button from '@mui/material/Button';
 
 const initialSizes = [
   { name: "S", quantity: 0 },
@@ -58,10 +59,10 @@ const CreateProductForm = () => {
   };
 
   return (
-    <Fragment>
+    <div className='p-10'>
       <Typography
         variant="h4"
-        sx={{ textAlin: "center" }}
+        sx={{ textAline: "center" }}
         className="py-10 text-center"
       >
         Add New Product
@@ -98,7 +99,7 @@ const CreateProductForm = () => {
               onChange={handleChange}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
               label="Color"
@@ -107,7 +108,7 @@ const CreateProductForm = () => {
               onChange={handleChange}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
               label="Quantity"
@@ -117,7 +118,7 @@ const CreateProductForm = () => {
               onChange={handleChange}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={4}>
             <TextField
               fullWidth
               label="Price"
@@ -127,7 +128,7 @@ const CreateProductForm = () => {
               onChange={handleChange}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={4}>
             <TextField
               fullWidth
               label="Discount Price"
@@ -137,7 +138,7 @@ const CreateProductForm = () => {
               onChange={handleChange}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={4}>
             <TextField
               fullWidth
               label="Discount Percentage"
@@ -148,7 +149,7 @@ const CreateProductForm = () => {
             />
           </Grid>
 
-          <Grid item xs={6} sm={4}>
+          <Grid item xs={12} sm={4}>
             <FormControl fullWidth>
               <InputLabel>Top Level Category</InputLabel>
               <Select
@@ -163,83 +164,91 @@ const CreateProductForm = () => {
               </Select>
             </FormControl>
           </Grid>
-          <Grid>
-            <Grid item xs={6} sm={4}>
+
+          <Grid item xs={12} sm={4}>
+            <FormControl fullWidth>
+              <InputLabel>Second Level Category</InputLabel>
+              <Select
+                name="secondLavelCategory"
+                value={productData.secondLavelCategory}
+                label="Second Level Category"
+                onChange={handleChange}
+              >
+                <MenuItem value="clothing">Clothing</MenuItem>
+                <MenuItem value="accessories">Accessories</MenuItem>
+                <MenuItem value="brands">Brands</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+          
+            <Grid item xs={12} sm={4}>
               <FormControl fullWidth>
-                <InputLabel>Second Level Category</InputLabel>
+                <InputLabel>Third Level Category</InputLabel>
                 <Select
-                  name="secondLavelCategory"
-                  value={productData.secondLavelCategory}
-                  label="Second Level Category"
+                  name="thirdLavelCategory"
+                  value={productData.thirdLavelCategory}
+                  label="Third Level Category"
                   onChange={handleChange}
                 >
-                  <MenuItem value="clothing">Clothing</MenuItem>
-                  <MenuItem value="accessories">Accessories</MenuItem>
-                  <MenuItem value="brands">Brands</MenuItem>
+                  <MenuItem value="top">T-Shirt</MenuItem>
+                  <MenuItem value="women_dress">Jeans</MenuItem>
+                  <MenuItem value="t_shirts">Shirt</MenuItem>
+                  <MenuItem value="sares">Shoes</MenuItem>
+                  <MenuItem value="lengha_choli">Accessories</MenuItem>
+                  <MenuItem value="mens_kurta">mens_kurta</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
-            <Grid>
-              <Grid item xs={6} sm={4}>
-                <FormControl fullWidth>
-                  <InputLabel>Third Level Category</InputLabel>
-                  <Select
-                    name="thirdLavelCategory"
-                    value={productData.thirdLavelCategory}
-                    label="Third Level Category"
-                    onChange={handleChange}
-                  >
-                    <MenuItem value="top">T-Shirt</MenuItem>
-                    <MenuItem value="women_dress">Jeans</MenuItem>
-                    <MenuItem value="t_shirts">Shirt</MenuItem>
-                    <MenuItem value="sares">Shoes</MenuItem>
-                    <MenuItem value="lengha_choli">Accessories</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  id='outlined-multiline-static'
-                  label="Description"
-                  name="description"
-                  multiline
-                  rows={3}
-                  value={productData.description}
-                  onChange={handleChange}
-                />
-              </Grid>
-              {productData.size.map((size, index) => (
-                <Grid container item spacing={3}>
-                  <Grid item xs={12} sm={6} >
-                    <TextField
-                      label="Size Name"
-                      name="name"
-                      value={size.name}
-                      onChange={(e) => handleSizeChange(e, index)}
-                      required
-                      fullWidth
-                    />
-                  </Grid>
-                  <Grid item sx={12} sm={6}>
-                    <TextField
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                id='outlined-multiline-static'
+                label="Description"
+                name="description"
+                multiline
+                rows={3}
+                value={productData.description}
+                onChange={handleChange}
+              />
+            </Grid>
+            {productData.size.map((size, index) => (
+              <Grid container item spacing={3} key={index}>
+                <Grid item xs={12} sm={6} >
+                  <TextField
+                    label="Size Name"
+                    name="name"
+                    value={size.name}
+                    onChange={(e) => handleSizeChange(e, index)}
+                    required
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
                     label="Quantity"
                     name='size_quantity'
                     type='number'
-                    onClick={(e) => handleSizeChange(e,index)}
+                    onChange={(e) => handleSizeChange(e, index)}
                     required
                     fullWidth
-                    />
-
-                  </Grid>
+                  />
                 </Grid>
-              ))}
+              </Grid>
+            ))}
+            <Grid item xs={12} >
+              <Button
+                variant="contained"
+                type="submit"
+                sx={{ p: 1.8 }}
+                className="py-20"
+                size="large"
+              >
+                Add New Product
+              </Button>
             </Grid>
-          </Grid>
         </Grid>
       </form>
-
-    </Fragment>
+    </div>
   )
 }
 

@@ -54,7 +54,9 @@ export const findProductsById = (reqData) => async (dispatch) => {
 
 export const createProduct = (product) => async (dispatch) => {
   dispatch({ type: CREATE_PRODUCT_REQUEST });
+
   try {
+    
     const { data } = await api.post(`${API_BASE_URL}/api/admin/products`, product);
     dispatch({ type: CREATE_PRODUCT_SUCCESS, payload: data });
   } catch (error) {
