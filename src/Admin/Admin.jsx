@@ -81,14 +81,14 @@ function Admin() {
     <div>
     <div className="flex h-[100vh]">
       <CssBaseline />
-      <div className=" w-[15%] border border-gray-300 h-full fixed">
+      <div className="shadow-lg shadow-gray-400' w-[15%] border border-r-gray-300 h-full fixed ">
         {drawer}
       </div>
-      {/* <div
+      {/* <div className='shadow-lg shadow-gray-400'
       >
         {drawer}
       </div> */}
-      <div className="w-[85%] h-full ml-[15%]">
+      <div className="w-[85%] h-full ml-[15%] mb-20">
         <Routes>
           <Route path="/" element={<AdminDashboard />}></Route>
           <Route path="products" element={<ProductTable />}></Route>

@@ -16,15 +16,15 @@ const TrophyImg = styled('img')({
 
 const Achivement = () => {
   return (
-    <Card className="space-y-6" sx={{ position: 'relative', bgcolor: 'black' }}>
+    <Card className="space-y-6" sx={{ position: 'relative' }}>
       <CardContent>
-        <Typography variant="h6" sx={{ letterSpacing: '0.25px', color: 'white' }}>
+        <Typography variant="h6" sx={{ letterSpacing: '0.25px' }}>
           Achievement
         </Typography>
-        <Typography sx={{ color: 'white' }}>
+        <Typography >
           Congratulations <strong>John!</strong>
         </Typography>
-        <Typography sx={{ my: 1, color: 'white' }}>429.3k</Typography>
+        <Typography sx={{ my: 1 }}>429.3k</Typography>
         <Button size="small" variant="contained">
           View Details
         </Button>
