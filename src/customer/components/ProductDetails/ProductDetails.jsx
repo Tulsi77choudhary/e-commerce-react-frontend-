@@ -7,7 +7,7 @@ import { useState } from 'react';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 import HomeSectionCard from '../HomeSectionCard/HomeSectionCard';
 import { mens_kurta } from '../../../Data/mens_kurta';
-import { useNavigate, useParams } from 'react-router-dom';
+import { createRoutesFromChildren, useNavigate, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { findProductsById } from '../../../State/Product/Action';
@@ -100,7 +100,7 @@ const handleAddToCart = () => {
             role="list"
             className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8"
           >
-            {products?.breadcrumbs?.map((breadcrumb) => (
+            {product?.breadcrumbs?.map((breadcrumb) => (
               <li key={breadcrumb.id}> 
                 <div className="flex items-center">
                   <a
@@ -306,9 +306,9 @@ const handleAddToCart = () => {
                   </div>
 
                   {/* Rating distribution */}
-                  <div className="w-full space-y-2">
+                  <div className="w-full space-y-3">
                     {[
-                      { label: 'Excellent', value: 80, color: 'success' },
+                      { label: 'Excellent', value: 80, color: 'success'},
                       { label: 'Good', value: 60, color: 'info' },
                       { label: 'Average', value: 40, color: 'warning' },
                       { label: 'Poor', value: 20, color: 'error' },
@@ -317,7 +317,7 @@ const handleAddToCart = () => {
                         <Grid item xs={3}>
                           <p className="text-sm">{item.label}</p>
                         </Grid>
-                        <Grid item xs={9}>
+                        <Grid item xs={7}>
                           <LinearProgress
                             variant="determinate"
                             value={item.value}

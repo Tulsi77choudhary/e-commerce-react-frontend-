@@ -2,9 +2,15 @@ import React from "react";
 
 const HomeSectionCard = ({ product }) => {
   const fallbackImage = "https://via.placeholder.com/150";
+  //const navigate = useNavigate()
+  // const handleClick = () => {
+  //   navigate(`/product/${product.id}`);
+  // };
 
   return (
-    <div className="cursor-pointer flex flex-col items-center justify-center p-3 bg-white shadow-md rounded-lg hover:shadow-lg hover:scale-105 transition-all duration-300">
+    <div
+      // onClick={handleClick}
+      className="cursor-pointer flex flex-col items-center justify-center p-3 bg-white shadow-md rounded-lg hover:shadow-lg hover:scale-105 transition-all duration-300">
       {/* Image Section */}
       <div className="h-[15rem] w-[10rem] flex items-center justify-center">
         <img

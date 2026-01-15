@@ -6,7 +6,7 @@ export const ProductReviewCard = () => {
         <div>
             <Grid item xs={1}>
                 <Box>
-                    <Avatar className='text-white' sx={{ width: 56, height: 56, backgroundColor: "#9155fd", fontSize: "1.5rem" }}></Avatar>
+                    <Avatar className='text-white' sx={{ width: 55, height: 55, backgroundColor: "#9155fd", fontSize: "1.5rem" }}></Avatar>
                 </Box>
             </Grid>
             <Grid item xs={9}>
