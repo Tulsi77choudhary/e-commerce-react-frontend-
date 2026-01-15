@@ -28,35 +28,35 @@ export const LoginForm = () => {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <Grid spacing={2}>
-          <Grid item xs={12}>
-            <TextField
-              required
-              id="email"
-              name="email"
-              label="Email"
-              fullWidth autoComplete="email"
-            />
-          </Grid>
-          <Grid item xs={12} mt={2}>
-            <TextField
-              required
-              id="password"
-              name="password"
-              label="Password"
-              type="password"
-              fullWidth autoComplete="current-password"
-            />
-          </Grid>
-          <Grid item xs={12} mt={2}>
-            <Button
-              type="submit"
-              variant="contained"
-              size="large" sx={{ padding: ".8rem 0", bgcolor: "#9155FD", width: '100%' }} >
-              Login
-            </Button>
-          </Grid>
+
+        <Grid item xs={12}>
+          <TextField
+            required
+            id="email"
+            name="email"
+            label="Email"
+            fullWidth autoComplete="email"
+          />
         </Grid>
+        <Grid item xs={12} mt={2}>
+          <TextField
+            required
+            id="password"
+            name="password"
+            label="Password"
+            type="password"
+            fullWidth autoComplete="current-password"
+          />
+        </Grid>
+        <Grid item xs={12} mt={2}>
+          <Button
+            type="submit"
+            variant="contained"
+            size="large" sx={{ padding: ".8rem 0", bgcolor: "#9155FD", width: '100%' }} >
+            Login
+          </Button>
+        </Grid>
+
       </form>
       <div className="flex justify-center flex-col items-center">
         <div className="py-3 flex items-center">

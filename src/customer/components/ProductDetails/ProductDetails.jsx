@@ -74,6 +74,7 @@ export default function ProductDetails() {
   const params = useParams();
   const dispatch = useDispatch();
   const { product} = useSelector(state => state.product);
+  console.log("product= ", product);
   
   const [selectedSize, setSelectedSize] = useState();
 
@@ -86,10 +87,9 @@ const handleAddToCart = () => {
 }
 
   useEffect(() => {
-    const data = { productId: params.productId }
-    console.log("Fetching product with ID:", data);
-    dispatch(findProductsById(data))
-  }, [params.productId])
+  dispatch(findProductsById({ productId: Number(params.productId) }))
+}, [params.productId, dispatch])
+
 
   return (
     <div className="bg-white lg:px-20 px-4">

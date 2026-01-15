@@ -1,4 +1,4 @@
-export const womensSaree=[
+export const womens_Saree=[
     {
         "image": "https://rukminim1.flixcart.com/image/612/612/xif0q/sari/6/t/z/free-sequined-embroidered-saree-granthva-fab-unstitched-original-imaggsq6b4y2adwk.jpeg?q=70",
         "title": "PRATHAM BLUE",

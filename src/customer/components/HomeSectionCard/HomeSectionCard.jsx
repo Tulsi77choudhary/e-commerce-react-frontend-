@@ -9,7 +9,11 @@ const HomeSectionCard = ({ product }) => {
       <div className="h-[15rem] w-[10rem] flex items-center justify-center">
         <img
           className="object-cover object-top w-full h-full rounded-md"
-          src={product?.imageUrl || fallbackImage}
+          src={product?.imageUrl ||
+            product?.image ||
+            product?.imageSrc ||
+            product?.img ||
+            product?.images?.[0] || fallbackImage}
           alt={product?.title || product?.brand || "Product image"}
         />
       </div>
@@ -22,7 +26,7 @@ const HomeSectionCard = ({ product }) => {
         <p className="mt-1 text-sm text-gray-500 truncate max-w-[10rem]">
           {product?.title || "No title available"}
         </p>
-        <p className="mt-1 text-gray-700  text-bold">
+        <p className="mt-1 text-gray-500 text-bold">
           ₹{product?.price || "Uncategorized"}
         </p>
 

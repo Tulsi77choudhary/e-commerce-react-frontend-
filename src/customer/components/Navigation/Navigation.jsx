@@ -218,12 +218,15 @@ export default function Navigation() {
 
                 <div className="space-y-6 border-t border-gray-200 px-4 py-6">
                   <div className="flow-root">
-                    <a
-                      href="/"
+                    <button
+                      onClick={() => {
+                        setOpen(false);      
+                        handleOpen();    
+                      }}
                       className="-m-2 block p-2 font-medium text-gray-900"
                     >
                       Sign in
-                    </a>
+                    </button>
                   </div>
                 </div>
 
@@ -419,7 +422,7 @@ export default function Navigation() {
                         }}
                       >
                         {auth?.user?.firstName?.charAt(0).toUpperCase() || ""}
-                        
+
 
                       </Avatar>
                       <Menu

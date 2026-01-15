@@ -15,4 +15,4 @@ const rootReducers = combineReducers({
 });
 
 export const store = legacy_createStore(rootReducers, applyMiddleware(thunk));
-console.log("Initial state:", store.getState().product);
+

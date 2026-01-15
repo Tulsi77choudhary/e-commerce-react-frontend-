@@ -43,7 +43,7 @@ const customerProductReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: null,
-        product: action.payload.content
+        product: action.payload
       };
     case DELETE_PRODUCT_SUCCESS:
       return {

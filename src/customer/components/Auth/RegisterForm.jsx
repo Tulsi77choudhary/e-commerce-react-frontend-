@@ -1,23 +1,20 @@
-import React, { useEffect } from 'react'
-import { Button, Grid, TextField } from '@mui/material'
-import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { register} from '../../../State/Action/Action';
+import React, { useEffect } from "react";
+import { Button, Grid, TextField } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { register } from "../../../State/Action/Action";
 
-
-export const RegisterForm = () => {
-  
+const RegisterForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const jwt = localStorage.getItem("jwt");
   const auth = useSelector((store) => store.auth);
 
+  // Redirect after successful registration
   useEffect(() => {
     if (auth.user) {
       navigate("/");
     }
   }, [auth.user, navigate]);
-
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -28,86 +25,92 @@ export const RegisterForm = () => {
       firstName: data.get("firstName"),
       lastName: data.get("lastName"),
       email: data.get("email"),
-      password: data.get("password")
-    }
-    dispatch(register(userData))
-    console.log("userData", userData);
+      password: data.get("password"),
+    };
 
-  }
-
+    dispatch(register(userData));
+  };
 
   return (
     <div>
-
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} noValidate>
+        {/* Name Fields */}
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={6} >
+          <Grid item xs={12} sm={6}>
             <TextField
               required
-              id="firstName"
               name="firstName"
               label="First Name"
               fullWidth
-              autoComplete='given-name'
+              autoComplete="given-name"
             />
           </Grid>
-          <Grid item xs={12} sm={6}   >
+
+          <Grid item xs={12} sm={6}>
             <TextField
               required
-              id="lastName"
               name="lastName"
               label="Last Name"
               fullWidth
-              autoComplete='given-name'
+              autoComplete="family-name"
             />
           </Grid>
-        </Grid>
-        <Grid spacing={2} mt={2}>
-          <Grid item xs={12} sm={6} >
+
+          {/* Email */}
+          <Grid item xs={12}>
             <TextField
               required
-              id="email"
               name="email"
               label="Email"
+              type="email"
               fullWidth
-              autoComplete='email'
+              autoComplete="email"
             />
           </Grid>
 
-          <Grid item xs={12} sm={6} mt={2} >
+          {/* Password */}
+          <Grid item xs={12}>
             <TextField
               required
-              id="password"
               name="password"
               label="Password"
+              type="password"
               fullWidth
-              autoComplete='password'
+              autoComplete="new-password"
             />
           </Grid>
-          <Grid item xs={12} mt={2}>
-            <Button
-              className='bg-[#9155FD] w-full'
-              type='submit'
-              variant='contained'
-              size='large'
-              sx={{ padding: ".8rem 0", bgcolor: "#9155FD" }}
 
+          {/* Submit Button */}
+          <Grid item xs={12}>
+            <Button
+              type="submit"
+              variant="contained"
+              size="large"
+              fullWidth
+              sx={{
+                padding: ".8rem 0",
+                bgcolor: "#9155FD",
+                "&:hover": { bgcolor: "#7e3ff2" },
+              }}
             >
               Register
             </Button>
           </Grid>
-
         </Grid>
-
       </form>
 
-      <div className='flex justify-center flex-col items-center'>
-        <div className='py-3 flex items-center'>
-          <p>If you have already account ?</p>
-          <Button onClick={() => navigate("/login")} className='ml-5' size='small'>Login</Button>
+      {/* Switch to Login */}
+      <div className="flex justify-center flex-col items-center mt-3">
+        <div className="py-2 flex items-center gap-2">
+          <p>Already have an account?</p>
+          <Button size="small" onClick={() => navigate("/login")}>
+            Login
+          </Button>
         </div>
       </div>
     </div>
-  )
-}
-export default RegisterForm
+  );
+};
+
+export default RegisterForm;
+

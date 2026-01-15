@@ -1,4 +1,4 @@
-export const mensShoes=[
+export const mens_Shoes=[
     {
         "image": "https://rukminim1.flixcart.com/image/612/612/l08gsy80/shoe/n/a/n/9-assg1015-9-abros-l-grey-maroon-original-imagc2m9zbzmtybx.jpeg?q=70",
         "brand": "Abros",

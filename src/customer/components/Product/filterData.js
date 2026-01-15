@@ -4,47 +4,28 @@ const filters = [
     id: 'color',
     name: 'Color',
     options: [
-      { value: 'white', label: 'White', checked: false },
-      { value: 'beige', label: 'Beige', checked: false },
-      { value: 'yello', label: 'Yello', checked: false },
-      { value: 'blue', label: 'Blue', checked: true },
-      { value: 'brown', label: 'Brown', checked: false },
-      { value: 'green', label: 'Green', checked: false },
-      { value: 'purple', label: 'Purple', checked: false },
+      { value: 'white', label: 'White' },
+      { value: 'beige', label: 'Beige' },
+      { value: 'yello', label: 'Yello' },
+      { value: 'blue', label: 'Blue' },
+      { value: 'brown', label: 'Brown' },
+      { value: 'green', label: 'Green' },
+      { value: 'purple', label: 'Purple' },
     ],
   },
-  {
-    id: 'category',
-    name: 'Category',
-    options: [
-      { value: 'new-arrivals', label: 'New Arrivals', checked: false },
-      { value: 'sale', label: 'Sale', checked: false },
-      { value: 'travel', label: 'Travel', checked: true },
-      { value: 'organization', label: 'Organization', checked: false },
-      { value: 'accessories', label: 'Accessories', checked: false },
-    ],
-  },
+  
   {
     id: 'size',
     name: 'Size',
     options: [
-      { value: '2l', label: '2L', checked: false },
-      { value: '6l', label: '6L', checked: false },
-      { value: '12l', label: '12L', checked: false },
-      { value: '18l', label: '18L', checked: false },
-      { value: '20l', label: '20L', checked: false },
-      { value: '40l', label: '40L', checked: true },
+      { value: 'S', label: 'S' },
+      { value: 'M', label: 'M' },
+      { value: 'L', label: 'L' },
+
     ],
   },
 
-  {
-    id: 'availability',
-    name: 'Availability',
-    options: [
-      { value: 'in-stock', label: 'In Stock', checked: true },
-      { value: 'out-of-stock', label: 'Out of Stock', checked: false },
-    ],
-  },
+
   {
     id: 'discount',
     name: 'Discount',
@@ -56,5 +37,36 @@ const filters = [
     ],
   },
 ];
+
+export const singleFilter = [
+  {
+    id: "price",
+    name: "Price",
+    options: [
+      { value: "0-199", label: "Under ₹199" },
+      { value: "200-399", label: "₹200 to ₹399" },
+      { value: "400-599", label: "₹400 to ₹599" },
+      { value: "600-799", label: "₹600 to ₹799" },
+      { value: "800-999", label: "₹800 to ₹999" },
+      { value: "1000-1499", label: "₹1000 to ₹1499" },
+      { value: "1500-1999", label: "₹1500 to ₹1999" },
+      { value: "2000+", label: "Above ₹2000" }
+    ]
+  },
+  { 
+    id: "discount",
+    name: "Discount Range",
+    options: [
+      { value: "0-10", label: "Up to 10% off" },
+      { value: "11-20", label: "11% to 20% off" },
+      { value: "21-30", label: "21% to 30% off" },
+      { value: "31-40", label: "31% to 40% off" },
+      { value: "41-50", label: "41% to 50% off" },
+      { value: "51-60", label: "51% to 60% off" },
+      { value: "61-70", label: "61% to 70% off" },
+      { value: "71-100", label: "Above 70% off" }
+    ]
+  }
+]
 
 export default filters;

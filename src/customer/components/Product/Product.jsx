@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import ProductCard from './ProductCard'
-import filters from './filterData'
+import filters, { singleFilter } from './filterData'
 
 
 import {
@@ -32,9 +32,6 @@ import { findProducts } from "../../../State/Product/Action";
 import Pagination from '@mui/material/Pagination';
 
 const sortOptions = [
-  { name: 'Most Popular', href: '#', current: true },
-  { name: 'Best Rating', href: '#', current: false },
-  { name: 'Newest', href: '#', current: false },
   { name: 'Price: Low to High', href: '#', current: false },
   { name: 'Price: High to Low', href: '#', current: false },
 ]
@@ -80,19 +77,16 @@ const Product = () => {
   const handleRadioFilter = (sectionId, value) => {
     const searchParams = new URLSearchParams(location.search);
 
-    if (value) {
-      searchParams.set(sectionId, value);
-    } else {
-      searchParams.delete(sectionId);
-    }
+    searchParams.set(sectionId, value);
 
     navigate({ search: `?${searchParams.toString()}` });
 
-    setSelectedFilters({
-      ...selectedFilters,
+    setSelectedFilters(prev => ({
+      ...prev,
       [sectionId]: [value],
-    });
+    }));
   };
+
 
   const handleFilter = (sectionId, value) => {
     const searchParams = new URLSearchParams(location.search)
@@ -115,13 +109,12 @@ const Product = () => {
       newFilters[key] = val.split(',')
     }
     setSelectedFilters(newFilters)
-    console.log("");
 
   }
 
-  const removeFilter = (sectionId, value) => {
-    handleFilter(sectionId, value)
-  }
+  // const removeFilter = (sectionId, value) => {
+  //   handleFilter(sectionId, value)
+  // }
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -319,8 +312,54 @@ const Product = () => {
             <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
               {/* Filters */}
               <form className="hidden lg:block">
-                <h3 className="sr-only">Categories</h3>
                 {filters.map((section) => (
+                  <Disclosure
+                    key={section.id}
+                    as="div"
+                    className="border-b border-gray-200 py-6"
+                  >
+                    <>
+                      <h3 className="-my-3 flow-root">
+                        <DisclosureButton className="group flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500">
+                          <span className="text-gray-900">{section.name}</span>
+                          <span className="ml-6 flex items-center">
+                            <PlusIcon
+                              aria-hidden="true"
+                              className="size-5 group-data-open:hidden"
+                            />
+                            <MinusIcon
+                              aria-hidden="true"
+                              className="size-5 group-not-data-open:hidden"
+                            />
+                          </span>
+                        </DisclosureButton>
+                      </h3>
+                      <DisclosurePanel className="pt-6">
+                        <FormControl>
+                          <FormLabel id={`${section.id}-label`}>
+                            {section.name}
+                          </FormLabel>
+                          <RadioGroup
+                            aria-labelledby={`${section.id}-label`}
+                            name={`${section.id}-radio`}
+                            value={selectedFilters[section.id]?.[0] || ""}
+                            onChange={(event) => handleRadioFilter(section.id, event.target.value)} // <-- fix here
+                          >
+                            {section.options.map((option) => (
+                              <FormControlLabel
+                                key={option.value}
+                                value={option.value}
+                                control={<Radio />}
+                                label={option.label}
+                              />
+                            ))}
+                          </RadioGroup>
+                        </FormControl>
+                      </DisclosurePanel>
+                    </>
+                  </Disclosure>
+                ))}
+                {singleFilter.map((section) => (
                   <Disclosure
                     key={section.id}
                     as="div"
@@ -393,8 +432,6 @@ const Product = () => {
                 color="primary"
                 onChange={handlePaginationChange}
               />
-
-
             </div>
           </section>
 
