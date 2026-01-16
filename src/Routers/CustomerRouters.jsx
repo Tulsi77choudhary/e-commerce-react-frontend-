@@ -28,8 +28,8 @@ export const CustomerRouters = () => {
                 <Route path='/checkout' element={<Chackout/>}></Route>
                 <Route path="/checkout/:orderId" element={<OrderSummary />}></Route>
                 <Route path='/account/order' element={<OrderDetails/>}></Route>
-                <Route path="/payment/:orderId" element={<PaymentSuccess/>}></Route>
-        
+                <Route path="/payment-success/:orderId" element={<PaymentSuccess />} />
+
                 {/* <Order/> */}
                 {/* <OrderDetails/>*/}
             </Routes>

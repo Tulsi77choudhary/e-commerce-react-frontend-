@@ -12,7 +12,7 @@ import { api } from '../../config/apiConfig';
 export const createPayment = (orderId) => async (dispatch) => {
   dispatch({ type: CREATE_PAYMENT_REQUEST });
   try {
-    const { data } = await api.post(`/api/payments/create/${orderId}`, {});
+    const { data } = await api.post(`/api/payments/payment/${orderId}`, {});
 
   
     if (data.payment_link_url) {

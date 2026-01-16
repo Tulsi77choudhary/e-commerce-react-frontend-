@@ -5,6 +5,7 @@ import CartItems from '../Cart/CartItems';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getOrderById } from '../../../State/Order/Action';
+import { createPayment } from '../../../State/Payment/Action';
 
 const OrderSummary = () => {
 
@@ -73,7 +74,7 @@ const OrderSummary = () => {
                 sx={{ px: "2.5rem", py: '0.7rem', bgcolor: '#9155fd', mt: '1rem' }}
                 onClick={handleChackOut}
               >
-                Checkout
+                Payment 
               </Button>
             </div>
           </div>
