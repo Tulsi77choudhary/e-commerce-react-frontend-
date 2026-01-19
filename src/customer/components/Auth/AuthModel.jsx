@@ -42,7 +42,7 @@ const AuthModel = ({ open, handleClose }) => {
       <Box sx={style}>
         {/* Header */}
         <Box display="flex" justifyContent="space-between" alignItems="center">
-          <h2 style={{ margin: 0 }}>
+          <h2 className="text-center ml-4 font-bold text-xl">
             {location.pathname === "/login" ? "Login" : "Register"}
           </h2>
           <IconButton onClick={handleClose}>

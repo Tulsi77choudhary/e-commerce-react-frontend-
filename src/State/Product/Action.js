@@ -16,27 +16,24 @@ import {
 import { api, API_BASE_URL } from "../../config/apiConfig";
 
 export const findProducts = (reqData) => async (dispatch) => {
-  const reqData = {
-    category: "",
-    color: [],
-    size: [],
-    minPrice: 0,
-    maxPrice: 1000000,
-    minDiscount: 0,
-    stock: "all",
-    sort: "price_low",
-    pageNumber: 0,
-    pageSize: 10
-  };
   dispatch({ type: FIND_PRODUCT_REQUEST });
-  try {
-    const { data } = await api.get("/api/product/products", { params: reqData });
 
+  try {
+    const { data } = await api.get(
+      `${API_BASE_URL}/api/product/products`,
+      { params: reqData }
+    );
+    console.log("Dta===",data);
+    
     dispatch({ type: FIND_PRODUCT_SUCCESS, payload: data });
   } catch (error) {
-    dispatch({ type: FIND_PRODUCT_FAILURE, payload: error.message });
+    dispatch({
+      type: FIND_PRODUCT_FAILURE,
+      payload: error.response?.data || error.message
+    });
   }
 };
+
 
 export const findProductsById = (reqData) => async (dispatch) => {
   dispatch({ type: FIND_PRODUCT_BY_ID_REQUEST });

@@ -56,7 +56,7 @@ const Product = () => {
   const param = useParams();
   const dispatch = useDispatch();
   const { products, pageInfo } = useSelector(state => state.product);
-  console.log("Info---", pageInfo);
+  console.log("Info---", products);
 
   const decodedQueryString = decodeURIComponent(location.search);
   const searchParams = new URLSearchParams(decodedQueryString);
@@ -118,8 +118,15 @@ const Product = () => {
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
-    const colorValue = searchParams.get("color") ? searchParams.get("color").split(",") : [];
-    const sizeValue = searchParams.get("size") ? searchParams.get("size").split(",") : [];
+
+    const colorValue = searchParams.get("color")
+      ? searchParams.get("color").split(",")
+      : [];
+
+    const sizeValue = searchParams.get("size")
+      ? searchParams.get("size").split(",")
+      : [];
+
     const priceValue = searchParams.get("price") || "";
     const discount = searchParams.get("discount") || 0;
     const sortValue = searchParams.get("sort") || "price_low";
@@ -129,19 +136,20 @@ const Product = () => {
     const [minPrice, maxPrice] = priceValue ? priceValue.split(" ").map(Number) : [0, 1000000];
 
     const data = {
-      category: param.levelThree,
+      category: "",
       color: colorValue,
       size: sizeValue,
-      minPrice,
-      maxPrice,
-      minDiscount: Number(discount) || 0,
-      sort: sortValue,
-      pageNumber: pageNumber - 1,
-      pageSize: 1,
+      minPrice: minPrice,
+      maxPrice: maxPrice,
+      minDiscount: discount,
+      sort: "price_low",
+      pageNumber: 0,
+      pageSize: 10,
       stock: stock,
     };
 
     dispatch(findProducts(data));
+
   }, [location.search, param.levelThree]);
 
 
