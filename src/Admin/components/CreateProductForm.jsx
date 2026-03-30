@@ -1,9 +1,10 @@
-import React, { Fragment } from 'react'
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { createProduct } from '../../State/Product/Action';
-import { useState } from 'react';
-import { Grid, TextField, Typography, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
-import Button from '@mui/material/Button';
+import { 
+  Grid, TextField, Typography, FormControl, InputLabel, 
+  Select, MenuItem, Button, Box, Paper, Divider 
+} from '@mui/material';
 
 const initialSizes = [
   { name: "S", quantity: 0 },
@@ -11,8 +12,7 @@ const initialSizes = [
   { name: "L", quantity: 0 },
   { name: "XL", quantity: 0 },
   { name: "XXL", quantity: 0 }
-]
-
+];
 
 const CreateProductForm = () => {
   const [productData, setProductData] = useState({
@@ -30,8 +30,8 @@ const CreateProductForm = () => {
     thirdLavelCategory: "",
     description: "",
   });
+
   const dispatch = useDispatch();
-  const jwt = localStorage.getItem("jwt");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -39,11 +39,11 @@ const CreateProductForm = () => {
       ...prevState,
       [name]: value,
     }));
-  }
+  };
 
   const handleSizeChange = (e, index) => {
     let { name, value } = e.target;
-    name = "size_quantity" ? name = "quantity" : name = e.target.name;
+    name === "size_quantity" ? name = "quantity" : name = e.target.name;
 
     const sizes = [...productData.size];
     sizes[index][name] = value;
@@ -51,205 +51,145 @@ const CreateProductForm = () => {
       ...prevState,
       size: sizes,
     }));
-  }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(createProduct(productData));
+    console.log("Product Data:", productData);
   };
 
   return (
-    <div className='p-10'>
-      <Typography
-        variant="h4"
-        sx={{ textAline: "center" }}
-        className="py-10 text-center"
-      >
-        Add New Product
-      </Typography>
+    <Box sx={{ p: { xs: 2, md: 5 }, bgcolor: "#f5f5f7", minHeight: "100vh" }}>
+      <Paper elevation={0} sx={{ p: 4, borderRadius: "16px", border: "1px solid #e0e0e0" }}>
+        
+        <Typography variant="h5" sx={{ fontWeight: 800, mb: 4, color: "#333" }}>
+          Create New Product
+        </Typography>
 
-      <form onSubmit={handleSubmit}
-        className='createProductContainer min-h-screen'
-      >
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label="Image URL"
-              name="imageUrl"
-              value={productData.imageUrl}
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              fullWidth
-              label="Brand"
-              name="brand"
-              value={productData.brand}
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              fullWidth
-              label="Title"
-              name="title"
-              value={productData.title}
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              fullWidth
-              label="Color"
-              name="color"
-              value={productData.color}
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              fullWidth
-              label="Quantity"
-              name="quantity"
-              type="number"
-              value={productData.quantity}
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <TextField
-              fullWidth
-              label="Price"
-              name="price"
-              type="number"
-              value={productData.price}
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <TextField
-              fullWidth
-              label="Discount Price"
-              name="discountedPrice"
-              type="number"
-              value={productData.discountedPrice}
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <TextField
-              fullWidth
-              label="Discount Percentage"
-              name="discountPersent"
-              type="number"
-              value={productData.discountPersent}
-              onChange={handleChange}
-            />
-          </Grid>
+        <form onSubmit={handleSubmit}>
+          <Grid container spacing={3}>
+            
+            {/* --- Basic Information --- */}
+            <Grid item xs={12}>
+              <TextField
+                fullWidth label="Product Image URL" name="imageUrl"
+                variant="outlined" value={productData.imageUrl} onChange={handleChange}
+              />
+            </Grid>
 
-          <Grid item xs={12} sm={4}>
-            <FormControl fullWidth>
-              <InputLabel>Top Level Category</InputLabel>
-              <Select
-                name="topLavelCategory"
-                value={productData.topLavelCategory}
-                label="Top Level Category"
-                onChange={handleChange}
-              >
-                <MenuItem value="men">Men</MenuItem>
-                <MenuItem value="women">Women</MenuItem>
-                <MenuItem value="kids">Kids</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField fullWidth label="Brand Name" name="brand" value={productData.brand} onChange={handleChange} />
+            </Grid>
 
-          <Grid item xs={12} sm={4}>
-            <FormControl fullWidth>
-              <InputLabel>Second Level Category</InputLabel>
-              <Select
-                name="secondLavelCategory"
-                value={productData.secondLavelCategory}
-                label="Second Level Category"
-                onChange={handleChange}
-              >
-                <MenuItem value="clothing">Clothing</MenuItem>
-                <MenuItem value="accessories">Accessories</MenuItem>
-                <MenuItem value="brands">Brands</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-          
+            <Grid item xs={12} sm={6}>
+              <TextField fullWidth label="Product Title" name="title" value={productData.title} onChange={handleChange} />
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <TextField fullWidth label="Primary Color" name="color" value={productData.color} onChange={handleChange} />
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <TextField fullWidth type="number" label="Total Quantity" name="quantity" value={productData.quantity} onChange={handleChange} />
+            </Grid>
+
+            {/* --- Pricing --- */}
+            <Grid item xs={12} sm={4}>
+              <TextField fullWidth type="number" label="Original Price" name="price" value={productData.price} onChange={handleChange} />
+            </Grid>
+
+            <Grid item xs={12} sm={4}>
+              <TextField fullWidth type="number" label="Discounted Price" name="discountedPrice" value={productData.discountedPrice} onChange={handleChange} />
+            </Grid>
+
+            <Grid item xs={12} sm={4}>
+              <TextField fullWidth type="number" label="Discount %" name="discountPersent" value={productData.discountPersent} onChange={handleChange} />
+            </Grid>
+
+            {/* --- Categories --- */}
             <Grid item xs={12} sm={4}>
               <FormControl fullWidth>
-                <InputLabel>Third Level Category</InputLabel>
-                <Select
-                  name="thirdLavelCategory"
-                  value={productData.thirdLavelCategory}
-                  label="Third Level Category"
-                  onChange={handleChange}
-                >
-                  <MenuItem value="top">T-Shirt</MenuItem>
-                  <MenuItem value="women_dress">Jeans</MenuItem>
-                  <MenuItem value="t_shirts">Shirt</MenuItem>
-                  <MenuItem value="sares">Shoes</MenuItem>
-                  <MenuItem value="lengha_choli">Accessories</MenuItem>
-                  <MenuItem value="mens_kurta">mens_kurta</MenuItem>
+                <InputLabel>Top Level Category</InputLabel>
+                <Select name="topLavelCategory" value={productData.topLavelCategory} label="Top Level Category" onChange={handleChange}>
+                  <MenuItem value="men">Men</MenuItem>
+                  <MenuItem value="women">Women</MenuItem>
+                  <MenuItem value="kids">Kids</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                id='outlined-multiline-static'
-                label="Description"
-                name="description"
-                multiline
-                rows={3}
-                value={productData.description}
-                onChange={handleChange}
-              />
+
+            <Grid item xs={12} sm={4}>
+              <FormControl fullWidth>
+                <InputLabel>Second Level</InputLabel>
+                <Select name="secondLavelCategory" value={productData.secondLavelCategory} label="Second Level" onChange={handleChange}>
+                  <MenuItem value="clothing">Clothing</MenuItem>
+                  <MenuItem value="accessories">Accessories</MenuItem>
+                </Select>
+              </FormControl>
             </Grid>
-            {productData.size.map((size, index) => (
-              <Grid container item spacing={3} key={index}>
-                <Grid item xs={12} sm={6} >
-                  <TextField
-                    label="Size Name"
-                    name="name"
-                    value={size.name}
-                    onChange={(e) => handleSizeChange(e, index)}
-                    required
-                    fullWidth
-                  />
+
+            <Grid item xs={12} sm={4}>
+              <FormControl fullWidth>
+                <InputLabel>Third Level</InputLabel>
+                <Select name="thirdLavelCategory" value={productData.thirdLavelCategory} label="Third Level" onChange={handleChange}>
+                  <MenuItem value="mens_kurta">Kurta</MenuItem>
+                  <MenuItem value="shirt">Shirt</MenuItem>
+                  <MenuItem value="jeans">Jeans</MenuItem>
+                  <MenuItem value="shoes">Shoes</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField fullWidth multiline rows={3} label="Product Description" name="description" value={productData.description} onChange={handleChange} />
+            </Grid>
+
+            {/* --- Sizes Section --- */}
+            <Grid item xs={12}>
+              <Box sx={{ mt: 3, p: 3, bgcolor: "#fafafa", borderRadius: "12px", border: "1px dashed #ccc" }}>
+                <Typography variant="h6" sx={{ mb: 2, fontSize: "1rem", fontWeight: 700 }}>
+                  Manage Stock per Size
+                </Typography>
+                <Grid container spacing={2}>
+                  {productData.size.map((size, index) => (
+                    <React.Fragment key={index}>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          label={`Size (${size.name})`} name="name" value={size.name}
+                          fullWidth size="small" onChange={(e) => handleSizeChange(e, index)}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          label="Available Stock" name='size_quantity' type='number'
+                          fullWidth size="small" onChange={(e) => handleSizeChange(e, index)}
+                        />
+                      </Grid>
+                    </React.Fragment>
+                  ))}
                 </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    label="Quantity"
-                    name='size_quantity'
-                    type='number'
-                    onChange={(e) => handleSizeChange(e, index)}
-                    required
-                    fullWidth
-                  />
-                </Grid>
-              </Grid>
-            ))}
-            <Grid item xs={12} >
+              </Box>
+            </Grid>
+
+            {/* --- Submit Button --- */}
+            <Grid item xs={12} sx={{ mt: 4 }}>
               <Button
-                variant="contained"
-                type="submit"
-                sx={{ p: 1.8 }}
-                className="py-20"
-                size="large"
+                fullWidth size="large" type="submit" variant="contained"
+                sx={{ 
+                  py: 1.8, bgcolor: "#9155FD", borderRadius: "10px", fontWeight: "bold",
+                  "&:hover": { bgcolor: "#7a45d1" } 
+                }}
               >
-                Add New Product
+                Publish Product
               </Button>
             </Grid>
-        </Grid>
-      </form>
-    </div>
-  )
-}
 
-export default CreateProductForm
+          </Grid>
+        </form>
+      </Paper>
+    </Box>
+  );
+};
+
+export default CreateProductForm;

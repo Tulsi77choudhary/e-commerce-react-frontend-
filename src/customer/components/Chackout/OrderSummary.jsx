@@ -1,82 +1,73 @@
 import React, { useEffect } from 'react';
-import { AddressCard } from '../AddressCard/AddressCard';
-import { Button } from '@mui/material'
-import CartItems from '../Cart/CartItems';
+import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
 import { getOrderById } from '../../../State/Order/Action';
-import { createPayment } from '../../../State/Payment/Action';
-
+import { CartItems } from '../Cart/CartItems';
+import { AddressCard } from '../AddressCard/AddressCard';
+import { Divider, Button } from '@mui/material';
 const OrderSummary = () => {
-
   const dispatch = useDispatch();
-  const { orderId } = useParams();
-  const { order } = useSelector((state) => state.order);
-
-  const handleChackOut = () => {
-    dispatch(createPayment(orderId));
-  };
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const orderId = searchParams.get("order_id");
+  const { order, loading } = useSelector(state => state.order); // loading state add karein
 
   useEffect(() => {
     if (orderId) {
       dispatch(getOrderById(orderId));
     }
-  }, [dispatch, orderId]);
+  }, [orderId, dispatch]);
 
-  const totalPrice = order?.orderItems?.reduce((sum, item) => sum + item.price, 0) || 0;
-  const totalDiscount = order?.orderItems?.reduce((sum, item) => sum + (item.price - item.discountedPrice), 0) || 0;
-  const totalDiscountedPrice = totalPrice - totalDiscount;
-
-  const handleRemoveCartItem = () => {
-    dispatch(removeItemToCart(item?.id, userId));
-  }
+  // Agar order loading mein hai ya null hai
+  if (!order && loading) return <div className="p-20 text-center">Loading Summary...</div>;
 
   return (
-
-    <div>
-      <div className='p-4 shadow-lg rounded-s-md'>
-        {order?.shippingAddress && <AddressCard address={order.shippingAddress} />}
-
+    <div className="space-y-5 animate-fade-in">
+      <div className="p-5 shadow-sm border border-gray-100 rounded-2xl bg-white">
+        <h3 className="text-sm font-black uppercase text-gray-400 mb-4 tracking-widest">Delivery Address</h3>
+        {/* Check if address exists */}
+        <AddressCard address={order?.shippingAddress || order?.address} />
       </div>
-      <div>
-        <div className='lg:grid grid-cols-3 relative mt-2'>
-          <div className="col-span-2">
-            {order?.orderItems?.map((item) => (
+
+      <div className="lg:grid grid-cols-3 gap-8">
+        <div className="col-span-2 space-y-3">
+          {/* orderItems exists check */}
+          {order?.orderItems?.length > 0 ? (
+            order.orderItems.map((item) => (
               <CartItems key={item.id} item={item} />
-            ))}
+            ))
+          ) : (
+             <div className="p-10 text-center bg-white rounded-xl">No items found</div>
+          )}
+        </div>
 
-          </div>
-
-          <div className='px-4 sticky top-0 h-[100vh] mt-5 lg:mt-0'>
-            <div className='p-5 shadow-lg  rounded-md'>
-              <p className='uppercase font-bold opacity-60 pb-4'>Price Details</p>
-              <hr />
-              <div className='space-y-3 font-semibold'  >
-                <div className='flex justify-between pt-3 text-black'>
-                  <span>Price</span>
-                  <span>₹{totalPrice}</span>
-                </div>
-                <div className='flex justify-between pt-3'>
-                  <span>Disccount</span>
-                  <span className=' text-green-600'>{totalDiscount}</span>
-                </div>
-                <div className='flex justify-between pt-3 '>
-                  <span>Delivery Charges</span>
-                  <span className=' text-green-600'>Free</span>
-                </div>
-                <div className='flex justify-between pt-3 '>
-                  <span>Total Amount</span>
-                  <span className=' text-green-600'>{totalDiscountedPrice}</span>
-                </div>
+        <div className="sticky top-24 h-fit">
+          <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+            <p className="font-black text-gray-800 opacity-60 pb-4 uppercase text-xs tracking-widest">Order Summary</p>
+            <Divider />
+            <div className="space-y-4 mt-5 font-medium">
+              <div className="flex justify-between text-gray-600">
+                <span>Total Price</span>
+                <span>₹{order?.totalPrice}</span>
               </div>
-              <Button
-                variant="contained" className='w-full mt-5'
-                sx={{ px: "2.5rem", py: '0.7rem', bgcolor: '#9155fd', mt: '1rem' }}
-                onClick={handleChackOut}
-              >
-                Payment 
-              </Button>
+              <div className="flex justify-between text-green-600">
+                <span>Discount</span>
+                <span>-₹{order?.discount}</span>
+              </div>
+              <Divider sx={{ borderStyle: 'dashed' }} />
+              <div className="flex justify-between text-lg font-black text-gray-900">
+                <span>Total Amount</span>
+                <span className="text-indigo-600">₹{order?.totalDiscountedPrice}</span>
+              </div>
             </div>
+
+            <Button
+              variant="contained"
+              fullWidth
+              sx={{ mt: 4, py: 1.5, bgcolor: '#9155fd', borderRadius: '12px', fontWeight: 'bold' }}
+            >
+              Proceed to Payment
+            </Button>
           </div>
         </div>
       </div>
@@ -85,4 +76,3 @@ const OrderSummary = () => {
 };
 
 export default OrderSummary;
-

@@ -1,12 +1,9 @@
 import React from 'react';
-import Grid from "@mui/material/Grid";
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import { AddressCard } from '../AddressCard/AddressCard';
+import { Grid, Button, Box, TextField, Typography } from "@mui/material";
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { createOrder } from '../../../State/Order/Action';
+import { AddressCard } from '../AddressCard/AddressCard';
 
 export const DeliveryAddressForm = ({ onNext }) => {
   const dispatch = useDispatch();
@@ -26,92 +23,114 @@ export const DeliveryAddressForm = ({ onNext }) => {
       mobile: data.get("phoneNumber"),
     };
 
-    console.log("Submitting address:", address);
-
     dispatch(createOrder({ address, navigate }))
-      .then(() => {
-        onNext();
-      })
+      .then(() => onNext())
       .catch((error) => console.error("Order creation failed:", error));
   };
 
   return (
-    <Box className="p-4">
-      <Grid container spacing={7} justifyContent="center">
-        {/* Left Side */}
-        <Grid item xs={12} md={6} className="border rounded shadow-md overflow-y-scroll">
-          <Box className="p-5">
-            <div className="flex justify-center">
-              <AddressCard />
+    <div className="max-w-7xl mx-auto py-10">
+      <Grid container spacing={4}>
+        
+        {/* Left Side: Saved Addresses */}
+        <Grid item xs={12} lg={5}>
+          <Box className="border border-gray-100 rounded-2xl shadow-sm bg-white overflow-y-auto h-[32rem] custom-scrollbar">
+            <div className="p-6 border-b border-gray-50 bg-gray-50/50 sticky top-0 z-10">
+              <Typography variant="h6" sx={{ fontWeight: "800", color: "#1a1a1a" }}>
+                Saved Addresses
+              </Typography>
             </div>
-            <Button
-              sx={{ mt: 2, bgcolor: "rgb(145, 85, 253)" }}
-              size="large"
-              variant="contained"
-              fullWidth
-            >
-              Deliver Here
-            </Button>
+            
+            <div className="p-6 space-y-6">
+              {/* Aap yahan map function laga sakte hain agar multiple saved addresses hon */}
+              <div className="p-5 border border-gray-100 rounded-xl hover:border-[#9155FD] transition-all bg-white shadow-sm">
+                <AddressCard />
+                <Button
+                  variant="contained"
+                  fullWidth
+                  sx={{ 
+                    mt: 3, 
+                    bgcolor: "#9155FD", 
+                    borderRadius: "10px",
+                    fontWeight: "bold",
+                    "&:hover": { bgcolor: "#7a45d4" }
+                  }}
+                >
+                  Deliver Here
+                </Button>
+              </div>
+            </div>
           </Box>
         </Grid>
 
-        {/* Right Side Form */}
-        <Grid item xs={12} md={5} className="border rounded shadow-md">
-          <Box className="p-5">
+        {/* Right Side: New Address Form */}
+        <Grid item xs={12} lg={7}>
+          <Box className="bg-white border border-gray-100 rounded-2xl shadow-sm p-8">
+            <Typography variant="h6" sx={{ fontWeight: "800", mb: 4, color: "#1a1a1a" }}>
+              Add New Address
+            </Typography>
+            
             <form onSubmit={handleSubmit}>
-              <Grid container spacing={2}>
+              <Grid container spacing={3}>
                 <Grid item xs={12} sm={6}>
-                  <TextField required id="firstName" name="firstName" label="First Name" fullWidth />
+                  <TextField required id="firstName" name="firstName" label="First Name" fullWidth variant="standard" />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <TextField required id="lastName" name="lastName" label="Last Name" fullWidth />
+                  <TextField required id="lastName" name="lastName" label="Last Name" fullWidth variant="standard" />
+                </Grid>
+                
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    id="address"
+                    name="address"
+                    label="Street Address"
+                    fullWidth
+                    multiline
+                    rows={3}
+                    variant="standard"
+                  />
+                </Grid>
+
+                <Grid item xs={12} sm={6}>
+                  <TextField required id="city" name="city" label="City" fullWidth variant="standard" />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField required id="state" name="state" label="State" fullWidth variant="standard" />
+                </Grid>
+
+                <Grid item xs={12} sm={6}>
+                  <TextField required id="zip" name="zip" label="Zip Code" fullWidth variant="standard" />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField required id="phoneNumber" name="phoneNumber" label="Phone Number" fullWidth variant="standard" />
+                </Grid>
+
+                <Grid item xs={12}>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    fullWidth
+                    disableElevation
+                    sx={{ 
+                      mt: 4, 
+                      py: 1.8, 
+                      bgcolor: "#9155FD", 
+                      borderRadius: "12px",
+                      fontWeight: "bold",
+                      fontSize: "1rem",
+                      "&:hover": { bgcolor: "#7a45d4" }
+                    }}
+                  >
+                    SAVE AND DELIVER HERE
+                  </Button>
                 </Grid>
               </Grid>
-
-              <Box className="mt-4">
-                <TextField
-                  required
-                  id="address"
-                  name="address"
-                  label="Street Address"
-                  fullWidth
-                  multiline
-                  rows={4}
-                />
-              </Box>
-
-              <Grid container spacing={2} className="mt-4">
-                <Grid item xs={12} sm={6}>
-                  <TextField required id="city" name="city" label="City" fullWidth />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField required id="state" name="state" label="State" fullWidth />
-                </Grid>
-              </Grid>
-
-              <Grid container spacing={2} className="mt-4">
-                <Grid item xs={12} sm={6}>
-                  <TextField required id="zip" name="zip" label="Zip Code" fullWidth />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField required id="phoneNumber" name="phoneNumber" label="Phone Number" fullWidth />
-                </Grid>
-              </Grid>
-
-              <Button
-                sx={{ mt: 4, bgcolor: "rgb(145, 85, 253)" }}
-                size="large"
-                variant="contained"
-                type="submit"
-                fullWidth
-              >
-                DELIVER HERE
-              </Button>
             </form>
           </Box>
         </Grid>
       </Grid>
-    </Box>
+    </div>
   );
 };
 

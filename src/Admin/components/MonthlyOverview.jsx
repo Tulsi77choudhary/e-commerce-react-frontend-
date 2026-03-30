@@ -1,17 +1,8 @@
 import React from "react";
 import {
-  Grid,
-  Box,
-  Avatar,
-  Typography,
-  Card,
-  CardHeader,
-  CardContent,
-  IconButton,
-
+  Grid, Box, Avatar, Typography, Card, 
+  CardHeader, CardContent, IconButton
 } from "@mui/material";
-import DateRangeIcon from "@mui/icons-material/DateRange";
-
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import SettingsCellIcon from "@mui/icons-material/SettingsCell";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
@@ -20,88 +11,87 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 const salesData = [
   {
-    state: "245k",
+    stats: "245k",
     title: "Sales",
-    colors: "#ffd600",
+    color: "#9155FD", // Theme consistent purple
     icon: <TrendingUpIcon sx={{ fontSize: "1.75rem" }} />
   },
   {
-    state: "12.5k",
+    stats: "12.5k",
     title: "Customers",
-    colors: "#22CB5C",
+    color: "#22CB5C",
     icon: <AccountCircleIcon sx={{ fontSize: "1.75rem" }} />
   },
   {
-    state: "1.54k",
+    stats: "1.54k",
     title: "Products",
-    colors: "#DE4839",
+    color: "#DE4839",
     icon: <SettingsCellIcon sx={{ fontSize: "1.75rem" }} />
   },
   {
-    state: "2.5k",
-    title: "Sales",
-    colors: "#12B0E8",
+    stats: "₹88k",
+    title: "Revenue",
+    color: "#12B0E8",
     icon: <AttachMoneyIcon sx={{ fontSize: "1.75rem" }} />
   }
+];
 
-]
-
-const renderState = () => {
+const renderStats = () => {
   return salesData.map((item, index) => (
     <Grid item xs={12} sm={6} md={3} key={index}>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
-
-        <Avatar variant="rounded" sx={{
-          mr: 3,
-          width: 44,
-          height: 44,
-          boxShadow: 3,
-          color: "white",
-          backgroundColor: `${item.colors}`
-        }}>
+        <Avatar 
+          variant="rounded" 
+          sx={{
+            mr: 3,
+            width: 44,
+            height: 44,
+            boxShadow: '0px 3px 10px rgba(0,0,0,0.1)',
+            color: "white",
+            backgroundColor: item.color
+          }}
+        >
           {item.icon}
         </Avatar>
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-          <Typography variant="caption">{item.title}</Typography>
-          <Typography variant="h6">{item.state}</Typography>
+          <Typography variant="caption" sx={{ color: 'text.secondary', fontWeight: 600 }}>
+            {item.title}
+          </Typography>
+          <Typography variant="h6" sx={{ fontWeight: 700 }}>
+            {item.stats}
+          </Typography>
         </Box>
       </Box>
     </Grid>
-  ))
-}
+  ));
+};
+
 const MonthlyOverview = () => {
   return (
-    <Card className sx={{ position: 'relative' }}>
-      <CardHeader title="Monthly Overview" sx={{ fontWeight: 800 }}
+    <Card sx={{ borderRadius: '15px', position: 'relative', boxShadow: '0 4px 20px rgba(0,0,0,0.05)' }}>
+      <CardHeader 
+        title={<Typography variant="h5" sx={{ fontWeight: 800 }}>Monthly Overview</Typography>}
         action={
           <IconButton size="small">
             <MoreVertIcon />
           </IconButton>
         }
         subheader={
-          <Typography variant="body2">
-            <Box component="span" sx={{ fontWeight: 600 }}>
-              Total 48.5k groth
+          <Typography variant="body2" color="text.secondary">
+            <Box component="span" sx={{ fontWeight: 600, color: 'success.main', mr: 0.5 }}>
+              Total 48.5% growth
             </Box>
-            this month
+            😎 this month
           </Typography>
         }
-        titleTypographyProps={{
-          sx: {
-            nb: 2.5,
-            lineHeight: "2rem !important",
-            letterSpacing: "0.15px, ! important"
-          }
-        }}
       />
-      <CardContent sx={{ pt: theme => `${theme.spacing(3)} !important` }}>
-        <Grid container spacing={5.0}>
-          {renderState()}
-
+      <CardContent sx={{ pt: 4, pb: 4 }}>
+        <Grid container spacing={3}>
+          {renderStats()}
         </Grid>
       </CardContent>
     </Card>
-  )
-}
+  );
+};
 
-export default MonthlyOverview
+export default MonthlyOverview;

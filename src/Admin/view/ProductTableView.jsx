@@ -1,75 +1,116 @@
-import React from 'react'
-import { CardHeader,Avatar,Button,Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
-import { useSelector } from 'react-redux';
-import { useEffect } from "react";
-import { useDispatch } from 'react-redux';
-import { findProducts} from "../../State/Product/Action";
-import { Card } from "@mui/material";
-
+import React, { useEffect } from 'react';
+import { 
+  CardHeader, Avatar, Table, TableBody, TableCell, 
+  TableContainer, TableHead, TableRow, Paper, Card, Typography, Box 
+} from '@mui/material';
+import { useSelector, useDispatch } from 'react-redux';
+import { findProducts } from "../../State/Product/Action";
 
 const ProductTableView = () => {
-
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.product);
-  console.log("products", products);
 
   useEffect(() => {
-    const data = {
-      category: null,
-      color: [],
-      size: [],
-      minPrice: null,
-      maxPrice: null,
+    const queryData = {
+      category: "",
+      colors: [],
+      sizes: [],
+      minPrice: 0,
+      maxPrice: 100000,
       minDiscount: 0,
       sort: "price_low",
       pageNumber: 0,
       pageSize: 5,
       stock: "",
     };
-
-    dispatch(findProducts(data));
+    dispatch(findProducts(queryData));
   }, [dispatch]);
 
+  const productsList = products?.content || products || [];
+
   return (
-    <div className='p-5'>
-
-      <Card className="mt-2">
-        <CardHeader title="Recent Products" />
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
-            <TableHead>
+    // Box responsive padding ke liye
+    <Box sx={{ p: { xs: 1, sm: 2, md: 5 } }}> 
+      <Card sx={{ mt: 2, borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.05)' }}>
+        <CardHeader 
+          title={
+            <Typography variant="h6" sx={{ fontWeight: 800, fontSize: { xs: '1rem', sm: '1.25rem' } }}>
+              Recent Products
+            </Typography>
+          } 
+        />
+        
+        {/* TableContainer horizontal scroll allow karta hai mobile par */}
+        <TableContainer component={Paper} elevation={0} sx={{ overflowX: "auto" }}>
+          <Table sx={{ minWidth: 650 }} size="medium">
+            <TableHead sx={{ bgcolor: "#f9fafb" }}>
               <TableRow>
-                <TableCell>Image</TableCell>
-                <TableCell align="left">Title</TableCell>
-                <TableCell align="left">Category</TableCell>
-                <TableCell align="left">Price</TableCell>
-                <TableCell align="left">Quantity</TableCell>
-
+                <TableCell sx={{ fontWeight: "bold" }}>Image</TableCell>
+                <TableCell align="left" sx={{ fontWeight: "bold" }}>Title</TableCell>
+                <TableCell align="left" sx={{ fontWeight: "bold" }}>Category</TableCell>
+                <TableCell align="left" sx={{ fontWeight: "bold" }}>Price</TableCell>
+                <TableCell align="left" sx={{ fontWeight: "bold" }}>Quantity</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-               {products?.slice(0, 5).map((item) => (
+              {productsList.slice(0, 5).map((item) => (
                 <TableRow
-                  key={item.name}
+                  key={item.id || item.title}
+                  hover
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
                   <TableCell align="left">
-                    <Avatar src={item.imageUrl} />
+                    <Avatar 
+                      src={item.imageUrl} 
+                      variant="rounded" 
+                      sx={{ 
+                        width: { xs: 40, sm: 50 }, 
+                        height: { xs: 40, sm: 50 }, 
+                        border: '1px solid #f0f0f0' 
+                      }}
+                    />
                   </TableCell>
-                  <TableCell align="left" scope="row">
+                  <TableCell align="left" sx={{ fontWeight: 500, fontSize: { xs: '0.8rem', sm: '1rem' } }}>
                     {item.title}
                   </TableCell>
-                  <TableCell align="left">{item.category.name}</TableCell>
-                  <TableCell align="left">{item.price}</TableCell>
-                  <TableCell align="left">{item.quantity}</TableCell>
+                  <TableCell align="left">
+                    <Box 
+                      component="span" 
+                      sx={{ 
+                        display: 'inline-block',
+                        bgcolor: '#eff6ff', 
+                        color: '#2563eb', 
+                        px: 2, 
+                        py: 0.5, 
+                        borderRadius: '50px', 
+                        fontSize: '0.75rem', 
+                        fontWeight: 'bold' 
+                      }}
+                    >
+                       {item.category?.name}
+                    </Box>
+                  </TableCell>
+                  <TableCell align="left" sx={{ whiteSpace: 'nowrap' }}>₹{item.price}</TableCell>
+                  <TableCell align="left">
+                    <Typography 
+                      component="span" 
+                      sx={{ 
+                        color: item.quantity < 10 ? "error.main" : "success.main", 
+                        fontWeight: "bold",
+                        fontSize: '0.85rem'
+                      }}
+                    >
+                      {item.quantity}
+                    </Typography>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
       </Card>
-    </div>
-  )
+    </Box>
+  );
 }
 
-export default ProductTableView
+export default ProductTableView;

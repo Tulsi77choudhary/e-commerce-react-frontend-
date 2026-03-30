@@ -1,7 +1,8 @@
 import AliceCarousel from "react-alice-carousel";
 import { Button } from "@mui/material";
-import HomeSectionCard from "../HomeSectionCard/HomeSectionCard";
+import HomeSectionCard from "./HomeSectionCard";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight"; // Right icon add kiya
 import { useState, useEffect, useRef } from "react";
 
 const HomeSectionCarousel = ({ data = [], sectionName }) => {
@@ -45,18 +46,12 @@ const HomeSectionCarousel = ({ data = [], sectionName }) => {
     carouselRef.current.slideTo(newIndex);
   };
 
-  const syncActiveIndex = (event) => {
-    setActiveIndex(event.item);
-  };
-
- 
+  const syncActiveIndex = (event) => setActiveIndex(event.item);
 
   return (
-    <div>
-      <h2 className="text-2xl font-extrabold text-gray-800 py-5">
-        {sectionName}
-      </h2>
-      <div className="relative p-5 border border-gray-400 rounded-lg">
+    <div className="px-4 lg:px-8">
+      <h2 className="text-2xl font-extrabold text-gray-800 py-5">{sectionName}</h2>
+      <div className="relative p-5">
         <AliceCarousel
           items={items}
           disableButtonsControls
@@ -68,7 +63,7 @@ const HomeSectionCarousel = ({ data = [], sectionName }) => {
           ref={carouselRef}
         />
 
-        {/* Next button */}
+        {/* Next Button (Horizontal) */}
         {activeIndex < maxIndex && (
           <Button
             variant="contained"
@@ -76,16 +71,22 @@ const HomeSectionCarousel = ({ data = [], sectionName }) => {
             sx={{
               position: "absolute",
               top: "50%",
-              right: 0,
-              transform: "translateY(-50%) rotate(90deg)",
+              right: "0rem",
+              transform: "translateY(-50%) translateX(50%)", // Button ko center horizontal kiya
               bgcolor: "white",
+              color: "black",
+              minWidth: "0",
+              width: "40px",
+              height: "40px",
+              borderRadius: "50%",
+              "&:hover": { bgcolor: "white" },
             }}
           >
-            <KeyboardArrowLeftIcon sx={{ transform: "rotate(90deg)", color: "black" }} />
+            <KeyboardArrowRightIcon /> 
           </Button>
         )}
 
-        {/* Prev button */}
+        {/* Prev Button (Horizontal) */}
         {activeIndex > 0 && (
           <Button
             variant="contained"
@@ -93,12 +94,18 @@ const HomeSectionCarousel = ({ data = [], sectionName }) => {
             sx={{
               position: "absolute",
               top: "50%",
-              left: 0,
-              transform: "translateY(-50%) rotate(-90deg)",
+              left: "0rem",
+              transform: "translateY(-50%) translateX(-50%)", // Left side horizontal positioning
               bgcolor: "white",
+              color: "black",
+              minWidth: "0",
+              width: "40px",
+              height: "40px",
+              borderRadius: "50%",
+              "&:hover": { bgcolor: "white" },
             }}
           >
-            <KeyboardArrowLeftIcon sx={{transform: "rotate(90deg)", color: "black" }} />
+            <KeyboardArrowLeftIcon />
           </Button>
         )}
       </div>

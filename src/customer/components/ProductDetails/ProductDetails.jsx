@@ -3,9 +3,9 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import { ProductReviewCard } from './ProductReviewCard';
 import { Box } from '@mui/material';
+import HomeSectionCard from '../HomeSectionCarousel/HomeSectionCard';
 import { useState } from 'react';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
-import HomeSectionCard from '../HomeSectionCard/HomeSectionCard';
 import { mens_kurta } from '../../../Data/mens_kurta';
 import { createRoutesFromChildren, useNavigate, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
@@ -73,22 +73,22 @@ export default function ProductDetails() {
   const navigate = useNavigate();
   const params = useParams();
   const dispatch = useDispatch();
-  const { product} = useSelector(state => state.product);
+  const { product } = useSelector(state => state.product);
   console.log("product= ", product);
-  
+
   const [selectedSize, setSelectedSize] = useState();
 
-const handleAddToCart = () => {
-  const userId = localStorage.getItem("userId");
-  const data = { productId: params.productId, size: selectedSize.name }
-  console.log("Add to cart data:", data);
-  dispatch(addItemToCart(data,userId)) 
-  navigate("/cart")
-}
+  const handleAddToCart = () => {
+    const userId = localStorage.getItem("userId");
+    const data = { productId: params.productId, size: selectedSize.name }
+    console.log("Add to cart data:", data);
+    dispatch(addItemToCart(data, userId))
+    navigate("/cart")
+  }
 
   useEffect(() => {
-  dispatch(findProductsById({ productId: Number(params.productId) }))
-}, [params.productId, dispatch])
+    dispatch(findProductsById({ productId: Number(params.productId) }))
+  }, [params.productId, dispatch])
 
 
   return (
@@ -101,7 +101,7 @@ const handleAddToCart = () => {
             className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8"
           >
             {product?.breadcrumbs?.map((breadcrumb) => (
-              <li key={breadcrumb.id}> 
+              <li key={breadcrumb.id}>
                 <div className="flex items-center">
                   <a
                     href={breadcrumb.href}
@@ -153,7 +153,7 @@ const handleAddToCart = () => {
                   className="aspect-h-2 aspect-w-2 overflow-hidden rounded-lg max-w-[5rem] max-h-[4rem] mt-4 cursor-pointer hover:opacity-80"
                 >
                   <img
-                    
+
                     alt={item.alt}
                     src={item.src}
                     className="h-full w-full object-cover object-center"
@@ -280,54 +280,74 @@ const handleAddToCart = () => {
         </section>
 
         {/* Review & Rating */}
-        <section className="grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-10 px-4 pt-10 mb-20">
-          <h1 className="font-semibold text-lg pb-4">Recent Review & Rating</h1>
-          <div className="p-6 border">
-            <Grid container spacing={7}>
+        <section className="px-4 pt-12 pb-20 max-w-7xl mx-auto">
+          <div className="flex flex-col md:flex-row justify-between items-baseline border-b border-gray-100 pb-6 mb-10">
+            <h1 className="text-2xl font-black text-gray-900 tracking-tight uppercase">Recent Reviews & Ratings</h1>
+            <p className="text-indigo-600 font-bold text-sm cursor-pointer hover:underline">Rate this product</p>
+          </div>
 
-              {/* Left: Reviews */}
+          <div className="p-8 bg-white rounded-3xl border border-gray-100 shadow-sm">
+            <Grid container spacing={10}>
+              {/* Left Column: Individual Reviews */}
               <Grid item xs={12} md={7}>
-                <div className="space-y-5">
+                <div className="space-y-8 divide-y divide-gray-50">
                   {[1, 2, 3].map((idx) => (
-                    <ProductReviewCard key={idx} />
+                    <div key={idx} className={idx !== 1 ? "pt-8" : ""}>
+                      <ProductReviewCard />
+                    </div>
                   ))}
                 </div>
               </Grid>
 
-              {/* Right: Product Rating Summary */}
+              {/* Right Column: Analytics & Summary */}
               <Grid item xs={12} md={5}>
-                <div className="flex flex-col items-start space-y-4">
-                  <h2 className="font-semibold text-lg">Product Rating</h2>
+                <div className="sticky top-24 bg-gray-50/50 p-8 rounded-2xl border border-gray-50">
+                  <h2 className="text-xl font-bold text-gray-900 mb-6">Product Performance</h2>
 
-                  {/* Overall rating */}
-                  <div className="flex items-center">
-                    <Rating value={4.5} precision={0.5} readOnly />
-                    <p className="ml-2 text-gray-600 text-sm">374,934 Ratings</p>
+                  {/* Overall Score */}
+                  <div className="flex items-center gap-4 mb-8">
+                    <div className="bg-indigo-600 text-white px-4 py-2 rounded-xl text-2xl font-black shadow-lg shadow-indigo-200">
+                      4.5
+                    </div>
+                    <div>
+                      <Rating value={4.5} precision={0.5} readOnly size="small" />
+                      <p className="text-gray-500 text-xs font-bold uppercase tracking-widest mt-1">374,934 Verified Ratings</p>
+                    </div>
                   </div>
 
-                  {/* Rating distribution */}
-                  <div className="w-full space-y-3">
+                  {/* Progress Bars */}
+                  <div className="space-y-4">
                     {[
-                      { label: 'Excellent', value: 80, color: 'success'},
-                      { label: 'Good', value: 60, color: 'info' },
-                      { label: 'Average', value: 40, color: 'warning' },
-                      { label: 'Poor', value: 20, color: 'error' },
+                      { label: 'Excellent', value: 80, color: '#22c55e' },
+                      { label: 'Good', value: 60, color: '#84cc16' },
+                      { label: 'Average', value: 40, color: '#f59e0b' },
+                      { label: 'Poor', value: 20, color: '#ef4444' },
                     ].map((item, idx) => (
-                      <Grid container alignItems="center" key={idx} spacing={1}>
-                        <Grid item xs={3}>
-                          <p className="text-sm">{item.label}</p>
-                        </Grid>
-                        <Grid item xs={7}>
-                          <LinearProgress
-                            variant="determinate"
-                            value={item.value}
-                            sx={{ bgcolor: "#e0e0e0", borderRadius: 4, height: 8 }}
-                            color={item.color}
-                          />
-                        </Grid>
-                      </Grid>
+                      <div key={idx} className="space-y-1">
+                        <div className="flex justify-between items-center mb-1">
+                          <span className="text-xs font-bold text-gray-600 uppercase tracking-tighter">{item.label}</span>
+                          <span className="text-xs font-mono font-bold text-gray-400">{item.value}%</span>
+                        </div>
+                        <LinearProgress
+                          variant="determinate"
+                          value={item.value}
+                          sx={{
+                            bgcolor: "#ececec",
+                            borderRadius: 5,
+                            height: 6,
+                            "& .MuiLinearProgress-bar": {
+                              backgroundColor: item.color,
+                              borderRadius: 5
+                            }
+                          }}
+                        />
+                      </div>
                     ))}
                   </div>
+
+                  <button className="w-full mt-10 py-3 border-2 border-indigo-600 text-indigo-600 font-bold rounded-xl hover:bg-indigo-600 hover:text-white transition-all duration-300">
+                    Write a Review
+                  </button>
                 </div>
               </Grid>
             </Grid>
